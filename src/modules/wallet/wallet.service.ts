@@ -1,10 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { CreateWalletDto } from './dto/create-wallet.dto';
-import { UpdateWalletDto } from './dto/update-wallet.dto';
 
 @Injectable()
 export class WalletService {
-  create(createWalletDto: CreateWalletDto) {
+  create() {
     return 'This action adds a new wallet';
   }
 
@@ -16,7 +14,7 @@ export class WalletService {
     return `This action returns a #${id} wallet`;
   }
 
-  update(id: number, updateWalletDto: UpdateWalletDto) {
+  update(id: number) {
     return `This action updates a #${id} wallet`;
   }
 
