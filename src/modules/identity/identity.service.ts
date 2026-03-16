@@ -10,12 +10,14 @@ import { Identity } from './entities/identity.entity';
 import { ResponseIdentityDto } from './dto/response-identity.dto';
 import { UpdateIdentityDto } from './dto/update-identity.dto';
 import * as bcrypt from 'bcryptjs';
+import { WalletService } from '../wallet/wallet.service';
 
 @Injectable()
 export class IdentityService {
   constructor(
     @InjectRepository(Identity)
     private readonly identityRepository: Repository<Identity>,
+    private readonly walletService: WalletService,
   ) {}
 
   async register(registerDto: RegisterIdentityDto) {
@@ -41,6 +43,8 @@ export class IdentityService {
     });
 
     const saved = await this.identityRepository.save(identity);
+
+    await this.walletService.createWallet(saved.id);
 
     return {
       id: saved.id,
@@ -72,8 +76,10 @@ export class IdentityService {
     };
   }
 
-  remove(id: string) {
-    return this.identityRepository.delete(id);
+  async remove(id: string) {
+    await this.walletService.deleteWallet(id);
+    await this.identityRepository.delete(id);
+    return `user has been removed`;
   }
 
   async update(

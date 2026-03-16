@@ -3,40 +3,51 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
+  Query,
   Delete,
+  Patch,
 } from '@nestjs/common';
 import { WalletService } from './wallet.service';
-import { CreateWalletDto } from './dto/create-wallet.dto';
-import { UpdateWalletDto } from './dto/update-wallet.dto';
+import { DepositDto } from './dto/deposit-wallet.dto';
+import { BuyAssetDto } from './dto/buy-asset.dto';
 
 @Controller('wallet')
 export class WalletController {
   constructor(private readonly walletService: WalletService) {}
 
   @Post()
-  create(@Body() createWalletDto: CreateWalletDto) {
-    return this.walletService.create(createWalletDto);
+  createWallet(@Query('id') id: string) {
+    return this.walletService.createWallet(id);
   }
 
   @Get()
-  findAll() {
-    return this.walletService.findAll();
+  getWallet(@Query('id') id: string) {
+    return this.walletService.getWallet(id);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.walletService.findOne(+id);
+  @Patch(':id/deposit')
+  depositUSDT(@Param('id') id: string, @Body() dto: DepositDto) {
+    return this.walletService.depositUSDT(id, dto.amount);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateWalletDto: UpdateWalletDto) {
-    return this.walletService.update(+id, updateWalletDto);
+  @Get(':walletId/balances')
+  getBalances(@Param('walletId') walletId: string) {
+    return this.walletService.getBalances(walletId);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.walletService.remove(+id);
+  @Get(':walletId/transactions')
+  getTransactions(@Param('walletId') walletId: string) {
+    return this.walletService.getTransactions(walletId);
+  }
+
+  @Post('walletId/buy')
+  buyAsset(@Param('walletId') walletId: string, @Body() dto: BuyAssetDto) {
+    return this.walletService.buyAsset(walletId, dto);
+  }
+
+  @Delete()
+  deleteWallet(@Param('id') id: string) {
+    return this.walletService.deleteWallet(id);
   }
 }

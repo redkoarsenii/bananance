@@ -4,6 +4,7 @@ import { join } from 'path';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { IdentityModule } from './modules/identity/identity.module';
+import { WalletModule } from './modules/wallet/wallet.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { IdentityModule } from './modules/identity/identity.module';
       synchronize: true,
     }),
     IdentityModule,
+    WalletModule,
   ],
   controllers: [AppController],
   providers: [AppService],

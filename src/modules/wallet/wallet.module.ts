@@ -12,5 +12,6 @@ import { WalletBalances } from './entities/wallet_balances.entity';
   imports: [
     TypeOrmModule.forFeature([Wallet, WalletTransaction, WalletBalances]),
   ],
+  exports: [WalletService],
 })
 export class WalletModule {}
