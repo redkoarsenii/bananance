@@ -12,7 +12,7 @@ import { WalletService } from './wallet.service';
 import { DepositDto } from './dto/deposit-wallet.dto';
 import { BuyAssetDto } from './dto/buy-asset.dto';
 
-@Controller('wallet')
+@Controller({ path: 'wallet', version: '1' })
 export class WalletController {
   constructor(private readonly walletService: WalletService) {}
 

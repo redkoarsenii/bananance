@@ -11,7 +11,7 @@ import { IdentityService } from './identity.service';
 import { UpdateIdentityDto } from './dto/update-identity.dto';
 import { RegisterIdentityDto } from './dto/register-identity.dto';
 
-@Controller('identity')
+@Controller({ path: 'identity', version: '1' })
 export class IdentityController {
   constructor(private readonly identityService: IdentityService) {}
 
